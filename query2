@@ -1,0 +1,139 @@
+
+-------------------------------------------------------------------------------------------------------------------	## COSTUMERS
+CREATE TABLE costumers 
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR (100),
+    first_name VARCHAR (100),
+    last_name VARCHAR (100),
+    UNIQUE KEY email_unique (email)
+)ENGINE=Innodb;
+INSERT INTO costumers 
+	(email,first_name,last_name)
+VALUES
+	('genkerja@gmail.com','gen','san'),
+    ('dinoseros19@gmail.com','dino','kun')
+DESC costumers
+
+-------------------------------------------------------------------------------------------------------------------## PRODUCTS 
+CREATE TABLE products (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+nama VARCHAR (100) NOT NULL,
+description TEXT,
+price INT NOT NULL,
+quantity INT NOT NULL,
+created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=iNNODB;
+
+ALTER table products
+ADD CONSTRAINT fk_product_category
+	foreign key (id_category) REFERENCES categories (id);
+ADD COLUMN id_category INT;
+DROP COLUMN id_category
+DROP COLUMN category
+modify COLUMN id auto_increment;
+
+INSERT INTO products 
+	(nama,price,quantity,id_category)
+VALUES 
+	('es jeruk',455,100,2),
+	('es teh',344,100,2),
+	('amer',122,100,3)
+    
+UPDATE products 
+SET id_category = 1
+WHERE id=3
+desc products
+DROP TABLE products
+SELECT products.id, products.nama, categories.name AS category
+FROM products
+JOIN categories ON (categories.id=products.id_category);
+-------------------------------------------------------------------------------------------------------------------##WISHLIST
+CREATE TABLE wishlist
+(
+	id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_product INT (11) NOT NULL,
+    description TEXT, 
+    CONSTRAINT fk_wishlist_product
+		FOREIGN KEY (id_product) REFERENCES products (id)
+)ENGINE=Innodb;
+
+INSERT INTO wishlist
+		(id_product,description)
+	VALUES
+		('1','MAKANAN KESUKAAN')
+
+SELECT costumers.email, products.id, products.nama, wishlist.description 
+SELECT * FROM 
+FROM wishlist
+JOIN products ON (products.id = wishlist.id_product)
+JOIN costumers ON (costumers.id = wishlist.id_costumers);
+
+-------------------------------------------------------------------------------------------------------------------##SELLERS
+CREATE TABLE sellers 
+(
+id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+name VARCHAR(100),
+email VARCHAR(100),
+UNIQUE KEY email_unique (email),
+INDEX name_index (name) 
+)ENGINE=Innodb
+
+INSERT INTO sellers 
+		(name,email)
+    VALUES
+		("anton","anton@gmail.com"),
+        ("roy","roy@gmail.com")
+
+-------------------------------------------------------------------------------------------------------------------##ADMIN
+CREATE TABLE admin 
+(
+	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    first_name VARCHAR (100) NOT NULL,
+    last_name VARCHAR (100) NOT NULL
+) ENGINE=Innodb;
+
+INSERT INTO admin 
+		(first_name, last_name)
+    VALUES
+		("anton","medan"),
+        ("cak","cingur"),
+        ("roy","kiyoshi");
+        
+-------------------------------------------------------------------------------------------------------------------## WALLET
+CREATE TABLE wallet
+(
+	id INT NOT NULL PRIMARY KEY auto_increment,
+    id_costumers INT NOT NULL,
+    balance INT NOT NULL DEFAULT 0,
+    UNIQUE KEY id_costumers_unique (id_costumers),
+    FOREIGN KEY fk_wallet_id_costumers (id_costumers) REFERENCES costumers (id)
+)ENGINE=Innodb;
+
+SELECT * FROM costumers
+
+INSERT INTO wallet
+	(id_costumers)
+VALUES
+	(1),(2)
+
+select * from wallet
+SELECT costumers.email, wallet.balance
+FROM wallet
+JOIN costumers ON (wallet.id_costumers = costumers.id)
+
+-------------------------------------------------------------------------------------------------------------------## CATEGORIES
+CREATE TABLE categories
+(
+ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100)
+)ENGINE=Innodb;
+
+INSERT INTO categories
+	(name)
+VALUES
+	('makanan'),('minuman'),('lain-lain')
+    
+DESC categories
+SELECT * FROM categories
+
