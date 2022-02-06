@@ -1,0 +1,83 @@
+
+-------------------------------------------------------------------------------------------------------------------	## COSTUMERS
+CREATE TABLE costumers 
+(
+	id INT 		PRIMARY KEY 	AUTO_INCREMENT,
+    email VARCHAR (100),
+    first_name VARCHAR (100),
+    last_name VARCHAR (100),
+    UNIQUE KEY email_unique (email)
+)ENGINE=Innodb;
+INSERT INTO costumers 
+	(email,first_name,last_name)
+VALUES
+	('genkerja@gmail.com','gen','san'),
+    ('dinoseros19@gmail.com','dino','kun')
+-------------------------------------------------------------------------------------------------------------------## PRODUCTS 
+CREATE TABLE products (
+id INT PRIMARY KEY NOT NULL,
+nama VARCHAR (100) NOT NULL,
+desctiption TEXT,
+price INT NOT NULL,
+quantity INT NOT NULL,
+created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+) ENGINE=ENNODB;
+
+INSERT INTO products 
+	( nama,price,quantity)
+VALUES 
+	('mie ayam ceker',20000,100),
+	('mie ayam spesial',20000,100),
+	('mie ayam yamin',20000,100)
+
+-------------------------------------------------------------------------------------------------------------------##WISHLIST
+CREATE TABLE wishlist
+(
+	id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_product INT (11) NOT NULL,
+    description TEXT, 
+    CONSTRAINT fk_wishlist_product
+		FOREIGN KEY (id_product) REFERENCES products (id)
+)ENGINE=Innodb;
+
+INSERT INTO wishlist
+		(id_product,description)
+	VALUES
+		('1','MAKANAN KESUKAAN')
+
+SELECT costumers.email, products.id, products.nama, wishlist.description 
+SELECT * FROM 
+FROM wishlist
+JOIN products ON (products.id = wishlist.id_product)
+JOIN costumers ON (costumers.id = wishlist.id_costumers);
+
+-------------------------------------------------------------------------------------------------------------------##SELLERS
+CREATE TABLE sellers 
+(
+id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+name VARCHAR(100),
+email VARCHAR(100),
+UNIQUE KEY email_unique (email),
+INDEX name_index (name) 
+)ENGINE=Innodb
+
+INSERT INTO sellers 
+		(name,email)
+    VALUES
+		("anton","anton@gmail.com"),
+        ("roy","roy@gmail.com")
+
+-------------------------------------------------------------------------------------------------------------------##ADMIN
+CREATE TABLE admin 
+(
+	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    first_name VARCHAR (100) NOT NULL,
+    last_name VARCHAR (100) NOT NULL
+) ENGINE=Innodb;
+
+INSERT INTO admin 
+		(first_name, last_name)
+    VALUES
+		("anton","medan"),
+        ("cak","cingur"),
+        ("roy","kiyoshi");
